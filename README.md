@@ -39,7 +39,10 @@ git clone https://github.com/rajeev19g-ship-it/clinical-data-pipeline.git
 cd clinical-data-pipeline
 pip install -r requirements.txt
 ```
+## Author
 
-## Author:  Girish Rajeev
+**Girish Rajeev**  
+Clinical Data Scientist | Data Analyst | Regulatory Standards Leader | AI/ML Solution Engineer
 
-Clinical Data Scientist | Data Analyst | Regulatory Standards Leader | AI/ML Solution Engineer 
+[LinkedIn](https://www.linkedin.com/in/girish-rajeev-756808138/)
+
