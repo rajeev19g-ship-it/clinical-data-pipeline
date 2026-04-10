@@ -1,36 +1,115 @@
-# clinical-data-pipeline
+# Clinical Data Pipeline
+
 A production-grade clinical data pipeline covering the full study lifecycle — from protocol ingestion to submission-ready TLFs — powered by Python, LLMs, and machine learning.
 
+[![CI](https://github.com/rajeev19g-ship-it/clinical-data-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/rajeev19g-ship-it/clinical-data-pipeline/actions)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![CDISC](https://img.shields.io/badge/Standard-CDISC%20SDTM%203.3%20%7C%20ADaM%201.3-orange)](https://www.cdisc.org/)
+
+---
+
 ## Pipeline Overview
+Protocol PDF
+│
+▼
+┌─────────────────────────┐
+│  Protocol Automation    │  LLM extraction · variable mapping · CRF scaffolding
+└─────────────────────────┘
+│
+▼
+┌─────────────────────────┐
+│  SDTM Pipeline          │  DM · AE · LB · VS · EX · define.xml
+└─────────────────────────┘
+│
+▼
+┌─────────────────────────┐
+│  ADaM Engine            │  ADSL · ADAE · ADTTE · ADLB · ML imputation
+└─────────────────────────┘
+│
+▼
+┌─────────────────────────┐
+│  TLF Generation         │  Tables · Listings · Figures · CSR narratives
+└─────────────────────────┘
+│
+▼
+┌─────────────────────────┐
+│  ML / DL Models         │  Survival · AE signal detection · CoxPH
+└─────────────────────────┘
 
-| Module | Description | Key Libraries |
-|--------|-------------|---------------|
-| Protocol Automation | LLM-powered extraction of endpoints, arms, and visit schedules from protocol PDFs | LangChain, PyMuPDF |
-| SDTM Pipeline | Domain mappers, controlled terminology validation, define.xml generation | pandas, pyreadstat |
-| ADaM Engine | ADSL, ADAE, ADTTE, ADLB derivations with ML-based imputation | scikit-learn, TensorFlow |
-| TLF Generation | Automated table/listing/figure shells with LLM narrative drafting | Jinja2, python-docx |
-| ML Models | Survival analysis, AE signal detection, ClinicalBERT fine-tuning | lifelines, TensorFlow, Hugging Face |
+---
 
-## Repository Structure
-clinical-data-pipeline/
-├── src/
-│   ├── protocol_automation/   # LLM protocol parser
-│   ├── sdtm/                  # SDTM domain mappers
-│   ├── adam/                  # ADaM derivation engine
-│   ├── tlf/                   # TLF generation
-│   └── models/                # ML/DL models
-├── tests/                     # pytest test suite
-├── notebooks/                 # Exploratory notebooks
-└── data/                      # Synthetic CDISC pilot data and Clinical Annonymized data
+## Modules
+
+| Module | Files | Description |
+|--------|-------|-------------|
+| `src/protocol_automation/` | `parser.py`, `variable_mapper.py` | LLM-powered protocol PDF extraction, SDTM/ADaM variable mapping |
+| `src/sdtm/` | `base.py`, `domains.py`, `define_xml.py` | SDTM domain mappers (DM/AE/LB/VS/EX), define.xml generator |
+| `src/adam/` | `derivations.py`, `imputation.py` | ADSL/ADAE/ADTTE/ADLB derivations, ML-based missing value imputation |
+| `src/tlf/` | `generator.py`, `narrative.py` | Automated TLF shells, LLM-powered CSR narrative drafter |
+| `src/models/` | `survival.py`, `ae_signal.py` | KM/Cox PH survival models, autoencoder AE signal detection |
+
+---
+
+## Key Features
+
+- **LLM Protocol Parser** — Extracts endpoints, arms, inclusion/exclusion criteria, and visit schedules from protocol PDFs using GPT-4
+- **SDTM Domain Mappers** — Production-ready DM, AE, LB, VS, EX mappers with CDISC controlled terminology validation and XPT export
+- **define.xml Generator** — Automated CDISC Define-XML 2.0 for FDA/EMA eCTD submissions
+- **ADaM Derivations** — ADSL population flags, ADAE treatment-emergent flags, ADTTE survival endpoints (OS/PFS), ADLB change from baseline
+- **ML Imputation** — Three-tier imputation: SimpleImputer → MICE → Neural autoencoder (TensorFlow)
+- **TLF Engine** — Demographic tables (14.1.1), AE summaries (14.3.1), lab shift tables (14.3.4), subject listings (16.2.1)
+- **CSR Narrative Drafter** — ICH E3-compliant Section 11.2/11.4/11.5 draft narratives via LLM
+- **Survival Models** — Kaplan-Meier with CI, log-rank test, Cox PH regression (lifelines)
+- **AE Signal Detection** — Denoising autoencoder for unexpected AE pattern detection
+
+---
 
 ## Tech Stack
 
-- **Languages:** Python 3.10+
-- **ML/DL:** TensorFlow, scikit-learn, Hugging Face Transformers
-- **Clinical:** pyreadstat, pandas, Jinja2
-- **LLM:** LangChain, OpenAI API
-- **Testing:** pytest, GitHub Actions CI/CD
-- **Standards:** CDISC SDTM 3.3, ADaM 1.3, SEND 3.1
+| Category | Libraries |
+|----------|-----------|
+| Clinical/CDISC | pyreadstat, xport, pandas |
+| LLM/NLP | openai, langchain, transformers |
+| ML/DL | scikit-learn, TensorFlow, lifelines |
+| TLF Output | Jinja2, python-docx, reportlab |
+| Testing | pytest, pytest-cov |
+| CI/CD | GitHub Actions |
+
+---
+
+## Repository Structure
+clinical-data-pipeline/
+├── .github/workflows/ci.yml      # GitHub Actions CI pipeline
+├── src/
+│   ├── protocol_automation/
+│   │   ├── parser.py             # LLM protocol parser
+│   │   └── variable_mapper.py   # SDTM/ADaM variable mapper
+│   ├── sdtm/
+│   │   ├── base.py              # Abstract SDTMDomain base class
+│   │   ├── domains.py           # DM, AE, LB, VS, EX mappers
+│   │   └── define_xml.py        # Define-XML 2.0 generator
+│   ├── adam/
+│   │   ├── derivations.py       # ADSL, ADAE, ADTTE, ADLB
+│   │   └── imputation.py        # Simple, MICE, Neural imputers
+│   ├── tlf/
+│   │   ├── generator.py         # TLF generation engine
+│   │   └── narrative.py         # LLM CSR narrative drafter
+│   └── models/
+│       ├── survival.py          # KM, log-rank, Cox PH
+│       └── ae_signal.py         # AE anomaly detection
+├── tests/
+│   ├── test_parser.py
+│   ├── test_sdtm.py
+│   ├── test_adam.py
+│   ├── test_tlf.py
+│   └── test_models.py
+├── notebooks/                   # Exploratory analysis notebooks
+├── data/                        # Synthetic CDISC pilot data
+├── requirements.txt
+└── README.md
+
+---
 
 ## Getting Started
 
@@ -39,10 +118,33 @@ git clone https://github.com/rajeev19g-ship-it/clinical-data-pipeline.git
 cd clinical-data-pipeline
 pip install -r requirements.txt
 ```
+
+Set your OpenAI API key:
+```bash
+export OPENAI_API_KEY="your-key-here"
+```
+
+Run the test suite:
+```bash
+pytest tests/ -v --cov=src
+```
+
+---
+
+## Regulatory Standards
+
+- CDISC SDTM Implementation Guide v3.3
+- CDISC ADaM Implementation Guide v1.3
+- CDISC Define-XML 2.0
+- ICH E3 — Structure and Content of Clinical Study Reports
+- ICH E9 — Statistical Principles for Clinical Trials
+- FDA Study Data Technical Conformance Guide
+
+---
+
 ## Author
 
-**Girish Rajeev**  
+**Girish Rajeev**
 Clinical Data Scientist | Data Analyst | Regulatory Standards Leader | AI/ML Solution Engineer
 
-[LinkedIn](https://www.linkedin.com/in/girish-rajeev-756808138/)
-
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/girish-rajeev-756808138/)
