@@ -26,11 +26,18 @@ reportlab>=4.0.0
 # Clinical / CDISC
 xport>=3.6.0
 
+# Serving
+fastapi>=0.104.0
+uvicorn>=0.24.0
+pydantic>=2.0.0
+httpx>=0.25.0
+
+# Docker / deployment
+python-dotenv>=1.0.0
+
 # Testing
 pytest>=7.4.0
 pytest-cov>=4.1.0
 
 # Utilities
-python-dotenv>=1.0.0
 tqdm>=4.66.0
-pydantic>=2.0.0
