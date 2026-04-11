@@ -8,6 +8,15 @@ A production-grade clinical data pipeline covering the full study lifecycle — 
 [![CDISC](https://img.shields.io/badge/Standard-CDISC%20SDTM%203.3%20%7C%20ADaM%201.3-orange)](https://www.cdisc.org/)
 
 ---
+A production-grade CDISC-compliant clinical data pipeline with LLM-powered protocol automation, SDTM/ADaM derivations, automated TLF generation, and ML/DL models for survival analysis and adverse event signal detection.
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![CDISC](https://img.shields.io/badge/Standard-CDISC%20SDTM%20%7C%20ADaM-teal)
+![FDA](https://img.shields.io/badge/Submission-FDA%20eCTD-red)
+![TensorFlow](https://img.shields.io/badge/ML-TensorFlow%20%7C%20scikit--learn-orange)
+
+---
 
 ### Architecture
 
@@ -26,6 +35,22 @@ ML / DL Models         —  Kaplan-Meier · Cox PH · AE signal detection
          ↓
 FDA eCTD Submission Package
 ```
+
+---
+
+## Platform Overview
+
+| Module | Files | Description |
+|--------|-------|-------------|
+| `src/protocol_automation/` | `parser.py`, `variable_mapper.py` | LLM-powered protocol PDF extraction and SDTM/ADaM variable mapping |
+| `src/sdtm/` | `base.py`, `domains.py`, `define_xml.py` | SDTM domain mappers (DM/AE/LB/VS/EX), terminology validation, Define-XML 2.0 |
+| `src/adam/` | `derivations.py`, `imputation.py` | ADSL/ADAE/ADTTE/ADLB derivations, ML-based missing value imputation |
+| `src/tlf/` | `generator.py`, `narrative.py` | Automated TLF shells and LLM-powered CSR Section 11 narrative drafting |
+| `src/models/` | `survival.py`, `ae_signal.py` | Kaplan-Meier, Cox PH survival models, denoising autoencoder AE signal detection |
+
+---
+
+
 ---
 
 ## Modules
@@ -37,6 +62,22 @@ FDA eCTD Submission Package
 | `src/adam/` | `derivations.py`, `imputation.py` | ADSL/ADAE/ADTTE/ADLB derivations, ML-based missing value imputation |
 | `src/tlf/` | `generator.py`, `narrative.py` | Automated TLF shells, LLM-powered CSR narrative drafter |
 | `src/models/` | `survival.py`, `ae_signal.py` | KM/Cox PH survival models, autoencoder AE signal detection |
+
+---
+
+---
+
+## Tech Stack
+
+| Category | Libraries |
+|----------|-----------|
+| LLM / NLP | openai, langchain, langchain-openai, transformers |
+| ML / DL | TensorFlow, Keras, scikit-learn, lifelines |
+| Clinical / CDISC | pyreadstat, xport, Jinja2 |
+| Document generation | python-docx, reportlab |
+| MLOps | mlflow |
+| Serving | FastAPI, uvicorn, pydantic |
+| Testing | pytest, pytest-cov |
 
 ---
 
