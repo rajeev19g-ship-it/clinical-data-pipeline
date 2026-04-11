@@ -67,7 +67,49 @@ FDA eCTD Submission Package
 
 ---
 
-## Repository Structure
+### Repository Structure
+
+Same issue — the tree characters (├──, └──, │) aren't rendering on GitHub. Let me give you a clean replacement for all three READMEs.
+For clinical-data-pipeline README, find the Repository Structure section and replace with:
+markdown## Repository Structure
+
+```
+clinical-data-pipeline/
+├── .github/workflows/ci.yml        # GitHub Actions CI pipeline
+├── src/
+│   ├── protocol_automation/
+│   │   ├── parser.py               # LLM protocol parser
+│   │   └── variable_mapper.py      # SDTM/ADaM variable mapper
+│   ├── sdtm/
+│   │   ├── base.py                 # Abstract SDTMDomain base class
+│   │   ├── domains.py              # DM, AE, LB, VS, EX mappers
+│   │   └── define_xml.py           # Define-XML 2.0 generator
+│   ├── adam/
+│   │   ├── derivations.py          # ADSL, ADAE, ADTTE, ADLB
+│   │   └── imputation.py           # Simple, MICE, Neural imputers
+│   ├── tlf/
+│   │   ├── generator.py            # TLF generation engine
+│   │   └── narrative.py            # LLM CSR narrative drafter
+│   └── models/
+│       ├── survival.py             # KM, log-rank, Cox PH
+│       └── ae_signal.py            # AE anomaly detection
+├── tests/
+│   ├── test_parser.py
+│   ├── test_sdtm.py
+│   ├── test_adam.py
+│   ├── test_tlf.py
+│   └── test_models.py
+├── notebooks/                      # Exploratory analysis + MLflow
+├── data/                           # Synthetic CDISC pilot data
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+```
+
+# Repository Structure
+
+
 clinical-data-pipeline/
 ├── .github/workflows/ci.yml      # GitHub Actions CI pipeline
 ├── src/
