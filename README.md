@@ -9,34 +9,23 @@ A production-grade clinical data pipeline covering the full study lifecycle — 
 
 ---
 
-## Pipeline Overview
-Protocol PDF
-│
-▼
-┌─────────────────────────┐
-│  Protocol Automation    │  LLM extraction · variable mapping · CRF scaffolding
-└─────────────────────────┘
-│
-▼
-┌─────────────────────────┐
-│  SDTM Pipeline          │  DM · AE · LB · VS · EX · define.xml
-└─────────────────────────┘
-│
-▼
-┌─────────────────────────┐
-│  ADaM Engine            │  ADSL · ADAE · ADTTE · ADLB · ML imputation
-└─────────────────────────┘
-│
-▼
-┌─────────────────────────┐
-│  TLF Generation         │  Tables · Listings · Figures · CSR narratives
-└─────────────────────────┘
-│
-▼
-┌─────────────────────────┐
-│  ML / DL Models         │  Survival · AE signal detection · CoxPH
-└─────────────────────────┘
+### Architecture
 
+```
+Protocol PDF / Raw EDC Data
+         ↓
+Protocol Automation    —  LLM extraction · variable mapping · CRF scaffolding
+         ↓
+SDTM Pipeline          —  DM · AE · LB · VS · EX · define.xml · terminology
+         ↓
+ADaM Engine            —  ADSL · ADAE · ADTTE · ADLB · ML imputation
+         ↓
+TLF Generation         —  Tables · listings · figures · CSR narratives
+         ↓
+ML / DL Models         —  Kaplan-Meier · Cox PH · AE signal detection
+         ↓
+FDA eCTD Submission Package
+```
 ---
 
 ## Modules
